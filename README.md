@@ -175,6 +175,18 @@ The ultimate goal is to determine if the various cfDNA features identified in th
 ## 7. Methylation Analysis (Planned/Future Work)
 
 The provided data is bisulfite-treated, which allows for the detection of DNA methylation. While not explicitly implemented in the current scripts, extracting and analyzing methylation patterns from the `XM` tag in the BAM files is identified as a valuable area for future research. This would involve identifying methylated cytosines and comparing their distribution and frequency between ALS and Control samples.
+Additionally, DMA analysis and  methylation patterens at fragment ends.
+
+## 8. Expanded Genomic Context Analysis
+The current analysis looks at promoters and CpG islands. You could broaden this to other functional genomic elements because they were the easiest to extract.
+Future work can look at Enhancers an other regulatory elements, repeat elemetns and maybe disease specific regions.
+
+## 9. Expanded nuclesome Profiling
+We can expand on the profiling done to look at phasing as well as nuclesome free regions.
+
+## 10. Machine Learning Model Enhancements
+instead of using basic features we can create more complex features that may better than the current ones used. This will increase our F1- scores
+we can also explore more Advanced models like SVMs and Neural networks.
 
 ## Conclusion
 

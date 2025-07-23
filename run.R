@@ -639,12 +639,6 @@ for (sample_name in names(all_fragments_list)) {
     all_end_pos_dfs[[paste0(sample_name, "_Promoter")]] <- prom_end_pos_df
   }
   
-  cpg_end_pos_df <- calculate_relative_distances(
-    fragments_gr_sample, cpg_centers, "CpG_Island_Center", window_size = flanking_window
-  )
-  if (!is.null(cpg_end_pos_df)) {
-    all_end_pos_dfs[[paste0(sample_name, "_CpG")]] <- cpg_end_pos_df
-  }
   
 }
 
