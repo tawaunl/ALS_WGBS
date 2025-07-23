@@ -25,7 +25,7 @@ The data is a subset of data taken from [this paper](https://www.nature.com/arti
 To run this analysis, you need R installed. The necessary R packages can be installed using the `setup.R` script.
 
 1.  **Clone the Repository (or download files):**
-    Ensure you have the `Analysis/` folder containing `functions.R`, `run_analysis.R`, and `setup.R`.
+    Ensure you have the `Analysis/` folder containing `functions.R`, `run.R`, and `setup.R`.
 
 2.  **Place Data:**
     Create a `celfie/` directory at the same level as your `Analysis/` directory. Inside `celfie/`, place:

@@ -1057,74 +1057,73 @@ write.csv(all_classification_metrics,
           file =file.path(fig.dir, output_metrics_csv_file), row.names = FALSE)
 
 # Methelaytion analysis --------------------------------------
-# need to install sam tools from command line using homebrew
-
-sample_groups_map <- feature_data$Group
-names(sample_groups_map) <-feature_data$Sample
-bismark_extractor_path <- "../Bismark-0.22.3/bismark_methylation_extractor"
-sams_path <- "../samtools-1.22.1/samtools.h"
-base_methylation_output_dir <- "methylation_reports_chr21"
-if (!dir.exists(file.path(fig.dir,base_methylation_output_dir))) {
-  dir.create(file.path(fig.dir,base_methylation_output_dir), recursive = TRUE)
-}
-methylation_report_files <- list()
-
-for (bam_path in all_bam_files) {
-  sample_id <- strsplit(bam_path,".d")[[1]][1]
-  output_dir_for_sample <- file.path(file.path(fig.dir,base_methylation_output_dir),
-                                     tools::file_path_sans_ext(sample_id, compress = FALSE))
-  
-  # Create output directory for the current sample
-  if (!dir.exists(output_dir_for_sample)) {
-    dir.create(output_dir_for_sample, recursive = TRUE)
-    
-  }
-  # Construct the Bismark command arguments
-  # Ensure all paths are absolute to avoid issues with R's working directory
-  command_args <- c(
-    "--paired-end",
-    "--comprehensive",
-    "--no_header", # Often useful if you just want data
-    "-o", shQuote(output_dir_for_sample), # shQuote handles spaces in paths
-    shQuote(file.path(data.dir,"bam",bam_path))
-  )
-  
-  cat(paste0("Processing: ", sample_id, "\n"))
-  cat(paste0("  Command: ", bismark_extractor_path, " ", paste(command_args, collapse = " "), "\n"))
-  
-  # Execute the command
-  # intern=TRUE captures stdout/stderr, wait=TRUE ensures R waits for command to finish
-  # stdout/stderr are useful for debugging.
-  result <- system2(
-    command = bismark_extractor_path,
-    args = command_args,
-    stdout = TRUE,
-    stderr = TRUE,
-    wait = TRUE
-  )
-  
-  # Check for successful execution (status code 0 usually means success)
-  # Note: system2 doesn't return the exit status directly if stdout/stderr are captured.
-  # You'd need to check the 'result' for error messages.
-  if (!any(grepl("Error|Fail", result, ignore.case = TRUE))) { # Simple check for common errors in output
-    cat(paste0("  Successfully processed ", sample_id, "\n"))
-    # Store the path to the CpG report file
-    # Bismark names them consistently: [original_bam_name]_CpG_report.txt.gz
-    cpg_report_file <- file.path(output_dir_for_sample, paste0(tools::file_path_sans_ext(sample_id, compress = FALSE), "_CpG_report.txt.gz"))
-    
-    # Check if the file actually exists and is not empty (for robustness)
-    if (file.exists(cpg_report_file) && file.size(cpg_report_file) > 0) {
-      methylation_report_files[[sample_id]] <- cpg_report_file
-    } else {
-      warning(paste0("CpG report file not found or empty for ", sample_id, ": ", cpg_report_file))
-    }
-    
-  } else {
-    stop(paste0("Error processing ", sample_id, ". Bismark output:\n", paste(result, collapse = "\n")))
-  }
-}
-
-cat("\nAll Bismark methylation extraction commands executed.\n")
-cat("\nList of generated CpG report files:\n")
-print(unlist(methylation_report_files))
-
+# # need to install sam tools from command line using homebrew
+# 
+# sample_groups_map <- feature_data$Group
+# names(sample_groups_map) <-feature_data$Sample
+# bismark_extractor_path <- "../Bismark-0.22.3/bismark_methylation_extractor"
+# base_methylation_output_dir <- "methylation_reports_chr21"
+# if (!dir.exists(file.path(fig.dir,base_methylation_output_dir))) {
+#   dir.create(file.path(fig.dir,base_methylation_output_dir), recursive = TRUE)
+# }
+# methylation_report_files <- list()
+# 
+# for (bam_path in all_bam_files) {
+#   sample_id <- strsplit(bam_path,".d")[[1]][1]
+#   output_dir_for_sample <- file.path(file.path(fig.dir,base_methylation_output_dir),
+#                                      tools::file_path_sans_ext(sample_id, compress = FALSE))
+#   
+#   # Create output directory for the current sample
+#   if (!dir.exists(output_dir_for_sample)) {
+#     dir.create(output_dir_for_sample, recursive = TRUE)
+#     
+#   }
+#   # Construct the Bismark command arguments
+#   # Ensure all paths are absolute to avoid issues with R's working directory
+#   command_args <- c(
+#     "--paired-end",
+#     "--comprehensive",
+#     "--no_header", # Often useful if you just want data
+#     "-o", shQuote(output_dir_for_sample), # shQuote handles spaces in paths
+#     shQuote(file.path(data.dir,"bam",bam_path))
+#   )
+#   
+#   cat(paste0("Processing: ", sample_id, "\n"))
+#   cat(paste0("  Command: ", bismark_extractor_path, " ", paste(command_args, collapse = " "), "\n"))
+#   
+#   # Execute the command
+#   # intern=TRUE captures stdout/stderr, wait=TRUE ensures R waits for command to finish
+#   # stdout/stderr are useful for debugging.
+#   result <- system2(
+#     command = bismark_extractor_path,
+#     args = command_args,
+#     stdout = TRUE,
+#     stderr = TRUE,
+#     wait = TRUE
+#   )
+#   
+#   # Check for successful execution (status code 0 usually means success)
+#   # Note: system2 doesn't return the exit status directly if stdout/stderr are captured.
+#   # You'd need to check the 'result' for error messages.
+#   if (!any(grepl("Error|Fail", result, ignore.case = TRUE))) { # Simple check for common errors in output
+#     cat(paste0("  Successfully processed ", sample_id, "\n"))
+#     # Store the path to the CpG report file
+#     # Bismark names them consistently: [original_bam_name]_CpG_report.txt.gz
+#     cpg_report_file <- file.path(output_dir_for_sample, paste0(tools::file_path_sans_ext(sample_id, compress = FALSE), "_CpG_report.txt.gz"))
+#     
+#     # Check if the file actually exists and is not empty (for robustness)
+#     if (file.exists(cpg_report_file) && file.size(cpg_report_file) > 0) {
+#       methylation_report_files[[sample_id]] <- cpg_report_file
+#     } else {
+#       warning(paste0("CpG report file not found or empty for ", sample_id, ": ", cpg_report_file))
+#     }
+#     
+#   } else {
+#     stop(paste0("Error processing ", sample_id, ". Bismark output:\n", paste(result, collapse = "\n")))
+#   }
+# }
+# 
+# cat("\nAll Bismark methylation extraction commands executed.\n")
+# cat("\nList of generated CpG report files:\n")
+# print(unlist(methylation_report_files))
+# 
