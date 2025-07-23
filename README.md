@@ -1,6 +1,7 @@
 # ALS WGBS
 
-This repository contains R scripts for analyzing cell-free DNA (cfDNA) samples, specifically focusing on identifying features that can distinguish between ALS (Amyotrophic Lateral Sclerosis) and Control samples. The analysis involves insert size distribution, fragment end motif analysis, fragment coverage over genomic features, and a classification model to predict disease status.
+This repository contains R scripts for analyzing cell-free DNA (cfDNA) samples, specifically focusing on identifying features that can distinguish between ALS (Amyotrophic Lateral Sclerosis) and Control samples.
+The analysis involves insert size distribution, fragment end motif analysis, fragment coverage over genomic features, and a classification model to predict disease status.
 
 The provided data is a downsampled subset of chr21 from a larger dataset, processed for reduced file size to facilitate quick analysis.
 
@@ -131,7 +132,8 @@ The analysis begins by organizing the input data. This involves identifying the 
 Insert size, or fragment length, is a crucial characteristic of cfDNA. This section explores how the lengths of DNA fragments differ between the ALS and Control groups.
 
 * **Distribution Analysis:** The distribution of fragment lengths is examined for all samples, both individually and aggregated by disease group. This helps visualize overall patterns.
-* **Nucleosomal Fragment Proportions:** Specific attention is paid to fragments corresponding to mono-nucleosomal (around 150-180 base pairs) and di-nucleosomal (around 300-380 base pairs) lengths. The proportions of these fragment types are calculated and statistically compared between groups to identify potential differences related to nucleosome packaging.
+* **Nucleosomal Fragment Proportions:** Specific attention is paid to fragments corresponding to mono-nucleosomal (around 150-180 base pairs) and di-nucleosomal (around 300-380 base pairs) lengths.
+The proportions of these fragment types are calculated and statistically compared between groups to identify potential differences related to nucleosome packaging.
 * **Statistical Moments:** Beyond simple averages, statistical measures like skewness and kurtosis are calculated for fragment length distributions. These metrics describe the shape of the distribution, which can reveal subtle but significant differences between the groups.
 * **Short Fragment Enrichment:** The proportion of very short fragments (e.g., 85-105 base pairs) is specifically investigated, as these can be indicative of particular biological processes or disease states.
 
@@ -172,9 +174,12 @@ The ultimate goal is to determine if the various cfDNA features identified in th
     * **F1-Score:** A balance between precision and sensitivity.
 * **ROC Curves and Feature Importance:** ROC curves are plotted to visualize the trade-off between sensitivity and specificity, and feature importance is extracted from the Random Forest model to highlight which cfDNA characteristics are most influential in predicting disease status.
 
-## 7. Methylation Analysis (Planned/Future Work)
+# Planned and Future Ideas 
 
-The provided data is bisulfite-treated, which allows for the detection of DNA methylation. While not explicitly implemented in the current scripts, extracting and analyzing methylation patterns from the `XM` tag in the BAM files is identified as a valuable area for future research. This would involve identifying methylated cytosines and comparing their distribution and frequency between ALS and Control samples.
+## 7. Methylation Analysis 
+
+The provided data is bisulfite-treated, which allows for the detection of DNA methylation. While not explicitly implemented in the current scripts, extracting and analyzing methylation patterns from the `XM` tag in the BAM files is identified as a valuable area for future research.
+This would involve identifying methylated cytosines and comparing their distribution and frequency between ALS and Control samples.
 Additionally, DMA analysis and  methylation patterens at fragment ends.
 
 ## 8. Expanded Genomic Context Analysis
@@ -188,6 +193,17 @@ We can expand on the profiling done to look at phasing as well as nuclesome free
 instead of using basic features we can create more complex features that may better than the current ones used. This will increase our F1- scores
 we can also explore more Advanced models like SVMs and Neural networks.
 
+## 11. Integration and comparison of Protein and Gene Expression  
+Having other modalities can improve predictive models of ALS
+
+
 ## Conclusion
 
-This comprehensive analysis pipeline provides a robust framework for exploring cfDNA fragmentation patterns and their potential as biomarkers for distinguishing disease states. The current implementation focuses on various aspects of fragment length, genomic distribution, and end motifs, culminating in a classification module. The results, including statistical summaries, plots, and classification metrics, are output to the `Figures` directory, offering valuable insights into the differences between ALS and Control cfDNA profiles. The modular design, with separate functions and analysis scripts, ensures maintainability and scalability for future investigations with larger datasets or additional analyses like methylation.
+This analysis pipeline provides a framework for exploring cfDNA fragmentation patterns and their potential as biomarkers for distinguishing disease states.
+The current implementation focuses on various aspects of fragment length, genomic distribution, and end motifs, culminating in a classification module.
+The results, including statistical summaries, plots, and classification metrics, are output to the `Figures` directory, offering valuable insights into the differences between ALS and Control cfDNA profiles.
+
+
+
+
+
