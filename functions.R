@@ -231,7 +231,7 @@ get_fragment_end_motifs <- function(bam_file_path, ref_genome, motif_len = 6, va
   gal_pairs <- readGAlignmentPairs(bam_file_path, param = param)
   
   # Initial filtering for valid chromosomes
-  gal_pairs <- gal_pairs[as.character(seqnames(first(gal_pairs))) %in% valid_chroms]
+  gal_pairs <- gal_pairs[as.character(seqnames(gal_pairs)) %in% valid_chroms]
   if (length(gal_pairs) == 0) {
     message("No valid fragments found for processing in ", basename(bam_file_path), ". Returning empty DNAStringSet.")
     return(list(five_prime_motifs = DNAStringSet(), three_prime_motifs = DNAStringSet()))
